@@ -1,0 +1,47 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "title": "Learn Angular",
+      "person": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com",
+        "phone": "123-456-7890"
+      },
+      "startDate": "2024-01-10",
+      "endDate": "2024-01-20",
+      "priority": "MEDIUM",
+      "labels": ["HTML", "CSS"],
+      "description": "Build a cool app"
+    },
+    {
+      "id": 2,
+      "title": "Style the App",
+      "person": {
+        "id": 2,
+        "name": "Jane Smith",
+        "email": "jane@example.com",
+        "phone": "987-654-3210"
+      },
+      "startDate": "2024-02-15",
+      "priority": "EASY",
+      "labels": ["CSS", "TAILWIND"],
+      "description": "Make it look nice"
+    }
+  ],
+  "persons": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com",
+      "phone": "123-456-7890"
+    },
+    {
+      "id": 2,
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "phone": "987-654-3210"
+    }
+  ]
+}

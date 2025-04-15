@@ -1,1 +1,16 @@
-<p>navbar works!</p>
+<nav class="bg-blue-500 p-4 text-white">
+  <div class="container mx-auto flex justify-between items-center">
+    <a href="#" class="text-2xl font-bold">TODO App</a>
+    <button (click)="toggleMenu()" class="md:hidden">Menu</button>
+    <ul
+      [ngClass]="{
+        'hidden md:flex': !showMenu(),
+        'flex flex-col absolute top-16 left-0 w-full bg-blue-500 md:static md:flex-row md:space-x-4':
+          showMenu()
+      }"
+    >
+      <li><a href="#" class="hover:text-blue-200">Todos</a></li>
+      <li><a href="#" class="hover:text-blue-200">Persons</a></li>
+    </ul>
+  </div>
+</nav>
