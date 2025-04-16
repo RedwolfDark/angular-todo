@@ -4,6 +4,14 @@
   box-shadow: 0px 0px 5px 1px #99a0aa;
 }
 
+.mat-mdc-form-field-bottom-align {
+  display: none;
+}
+
+.mat-mdc-text-field-wrapper {
+  background-color: #fff !important;
+}
+
 ::ng-deep angular2-smart-table tr {
   display: flex;
   margin-bottom: 10px;
@@ -36,7 +44,7 @@
 }
 
 ::ng-deep angular2-smart-table .angular2-smart-pagination-nav ul li a::before {
-  display: none; // Remove any old icons or dots
+  display: none;
 }
 
 ::ng-deep angular2-smart-table .angular2-smart-pagination-nav {
@@ -46,8 +54,8 @@
   padding: 12px 20px;
   gap: 16px;
   font-size: 14px;
-  color: #4b5563; // Tailwind gray-600
-  border-top: 1px solid #e5e7eb;
+  color: #4b5563;
+  border: none;
   background-color: #fff;
 }
 
@@ -73,15 +81,15 @@
   border-radius: 6px;
   text-decoration: none;
   font-weight: 500;
-  color: #6b7280; // gray-500
+  color: #6b7280;
   transition: background 0.2s;
 
   &:hover {
-    background-color: #f3f4f6; // gray-100
+    background-color: #f3f4f6;
   }
 
   &.active {
-    background-color: #3b82f6; // blue-500
+    background-color: #3b82f6;
     color: white;
   }
 }

@@ -1,3 +1,55 @@
-<li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-  {{ item.label }}
-</li>
+<ng-container *ngIf="item">
+  <li class="navbar-item" [class]="item.special_class">
+    <a
+      [routerLink]="[item.href]"
+      routerLinkActive="router-link-active"
+      [id]="item.id"
+      *ngIf="item.sub_items; else noDropdown"
+      (click)="displayDropdown()"
+    >
+      <mat-icon class="navbar-icon" [fontIcon]="item.icon ?? ''"></mat-icon>
+      {{ item.title }}
+      <mat-icon
+        [class]="{ rotate: showDropdown() }"
+        class="arrow-dropdown"
+        fontIcon="arrow_drop_down"
+      ></mat-icon>
+    </a>
+
+    <ng-template #noDropdown>
+      <a
+        [routerLink]="[item.href]"
+        routerLinkActive="router-link-active"
+        [id]="item.id"
+        [class]="{ active: isItemActive() }"
+        (click)="activeItem(item)"
+      >
+        <mat-icon class="navbar-icon" [fontIcon]="item.icon ?? ''"></mat-icon>
+        {{ item.title }}
+      </a>
+    </ng-template>
+
+    <ng-container *ngIf="item.sub_items">
+      <ul class="sidebar-dropdown" [class]="{ show: showDropdown() }">
+        <ng-container *ngFor="let subitem of item.sub_items">
+          <a
+            [routerLink]="[subitem.href]"
+            routerLinkActive="router-link-active"
+            [id]="subitem.id"
+            [class]="{ active: isSubItemActive() }"
+            (click)="activeSubItem(subitem)"
+          >
+            <li>
+              <mat-icon
+                class="navbar-icon"
+                [class]="subitem.title"
+                [fontIcon]="subitem.icon ?? ''"
+              ></mat-icon>
+              {{ subitem.title }}
+            </li>
+          </a>
+        </ng-container>
+      </ul>
+    </ng-container>
+  </li>
+</ng-container>

@@ -15,8 +15,8 @@ import { routes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
+    importProvidersFrom(MatDialogModule, BrowserAnimationsModule),
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
-    importProvidersFrom(MatDialogModule, BrowserAnimationsModule),
   ],
 };

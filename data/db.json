@@ -1,5 +1,5 @@
 {
-  "todos": [
+  "tasks": [
     {
       "id": 1,
       "title": "Learn Angular",
@@ -7,12 +7,14 @@
         "id": 1,
         "name": "John Doe",
         "email": "john@example.com",
-        "phone": "123-456-7890"
+        "phone": "123-456-7890",
+        "profile": "https://i.pravatar.cc/30?img=2"
       },
       "startDate": "2024-01-10",
       "endDate": "2024-01-20",
       "priority": "MEDIUM",
-      "labels": ["HTML", "CSS"],
+      "labels": ["Html", "CSS"],
+      "status": "COMPLETED",
       "description": "Build a cool app"
     },
     {
@@ -22,11 +24,180 @@
         "id": 2,
         "name": "Jane Smith",
         "email": "jane@example.com",
-        "phone": "987-654-3210"
+        "phone": "987-654-3210",
+        "profile": "https://i.pravatar.cc/30?img=1"
       },
       "startDate": "2024-02-15",
-      "priority": "EASY",
-      "labels": ["CSS", "TAILWIND"],
+      "priority": "LOW",
+      "status": "TODO",
+      "labels": ["CSS", "Node.js"],
+      "description": "Make it look nice"
+    },
+    {
+      "id": 3,
+      "title": "Style the App",
+      "person": {
+        "id": 2,
+        "name": "Jane Smith",
+        "email": "jane@example.com",
+        "phone": "987-654-3210",
+        "profile": "https://i.pravatar.cc/30?img=1"
+      },
+      "startDate": "2024-02-15",
+      "priority": "LOW",
+      "status": "TODO",
+      "labels": ["CSS", "Node.js"],
+      "description": "Make it look nice"
+    },
+    {
+      "id": 4,
+      "title": "Learn Angular",
+      "person": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com",
+        "phone": "123-456-7890",
+        "profile": "https://i.pravatar.cc/30?img=2"
+      },
+      "startDate": "2024-01-10",
+      "endDate": "2024-01-20",
+      "priority": "MEDIUM",
+      "labels": ["Html", "CSS"],
+      "status": "COMPLETED",
+      "description": "Build a cool app"
+    },
+    {
+      "id": 5,
+      "title": "Learn Angular",
+      "person": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com",
+        "phone": "123-456-7890",
+        "profile": "https://i.pravatar.cc/30?img=2"
+      },
+      "startDate": "2024-01-10",
+      "endDate": "2024-01-20",
+      "priority": "MEDIUM",
+      "labels": ["Html", "CSS"],
+      "status": "COMPLETED",
+      "description": "Build a cool app"
+    },
+    {
+      "id": 6,
+      "title": "Learn Angular",
+      "person": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com",
+        "phone": "123-456-7890",
+        "profile": "https://i.pravatar.cc/30?img=2"
+      },
+      "startDate": "2024-01-10",
+      "endDate": "2024-01-20",
+      "priority": "MEDIUM",
+      "labels": ["Html", "CSS"],
+      "status": "COMPLETED",
+      "description": "Build a cool app"
+    },
+    {
+      "id": 7,
+      "title": "Learn Angular",
+      "person": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com",
+        "phone": "123-456-7890",
+        "profile": "https://i.pravatar.cc/30?img=2"
+      },
+      "startDate": "2024-01-10",
+      "endDate": "2024-01-20",
+      "priority": "MEDIUM",
+      "labels": ["Html", "CSS"],
+      "status": "COMPLETED",
+      "description": "Build a cool app"
+    },
+    {
+      "id": 8,
+      "title": "Learn Angular",
+      "person": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com",
+        "phone": "123-456-7890",
+        "profile": "https://i.pravatar.cc/30?img=2"
+      },
+      "startDate": "2024-01-10",
+      "endDate": "2024-01-20",
+      "priority": "MEDIUM",
+      "labels": ["Html", "CSS"],
+      "status": "COMPLETED",
+      "description": "Build a cool app"
+    },
+    {
+      "id": 9,
+      "title": "Learn Angular",
+      "person": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com",
+        "phone": "123-456-7890",
+        "profile": "https://i.pravatar.cc/30?img=2"
+      },
+      "startDate": "2024-01-10",
+      "endDate": "2024-01-20",
+      "priority": "MEDIUM",
+      "labels": ["Html", "CSS"],
+      "status": "COMPLETED",
+      "description": "Build a cool app"
+    },
+    {
+      "id": 10,
+      "title": "Learn Angular",
+      "person": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com",
+        "phone": "123-456-7890",
+        "profile": "https://i.pravatar.cc/30?img=2"
+      },
+      "startDate": "2024-01-10",
+      "endDate": "2024-01-20",
+      "priority": "MEDIUM",
+      "labels": ["Html", "CSS"],
+      "status": "COMPLETED",
+      "description": "Build a cool app"
+    },
+    {
+      "id": 11,
+      "title": "Style the App",
+      "person": {
+        "id": 2,
+        "name": "Jane Smith",
+        "email": "jane@example.com",
+        "phone": "987-654-3210",
+        "profile": "https://i.pravatar.cc/30?img=1"
+      },
+      "startDate": "2024-02-15",
+      "priority": "LOW",
+      "status": "TODO",
+      "labels": ["CSS", "Node.js"],
+      "description": "Make it look nice"
+    },
+    {
+      "id": 12,
+      "title": "Style the App",
+      "person": {
+        "id": 2,
+        "name": "Jane Smith",
+        "email": "jane@example.com",
+        "phone": "987-654-3210",
+        "profile": "https://i.pravatar.cc/30?img=1"
+      },
+      "startDate": "2025-04-16",
+      "priority": "LOW",
+      "status": "TODO",
+      "labels": ["CSS", "Node.js"],
       "description": "Make it look nice"
     }
   ],
@@ -35,13 +206,15 @@
       "id": 1,
       "name": "John Doe",
       "email": "john@example.com",
-      "phone": "123-456-7890"
+      "phone": "123-456-7890",
+      "profile": "https://i.pravatar.cc/30?img=1"
     },
     {
       "id": 2,
       "name": "Jane Smith",
       "email": "jane@example.com",
-      "phone": "987-654-3210"
+      "phone": "987-654-3210",
+      "profile": "https://i.pravatar.cc/30?img=2"
     }
   ]
 }

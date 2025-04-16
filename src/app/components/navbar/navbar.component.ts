@@ -1,17 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
+import { NavbarItemComponent } from '../navbar-items/navbar-items.component';
+import { MENUITEMS } from './menu.data';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule],
-  template: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
+  imports: [CommonModule, NavbarItemComponent],
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  showMenu = signal(false);
+  private _showMenu = signal(false);
+  showMenu = this._showMenu.asReadonly();
+
+  menuItems = MENUITEMS;
 
   toggleMenu() {
-    this.showMenu.update((value) => !value);
+    this._showMenu.update((show) => !show);
   }
 }
