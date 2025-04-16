@@ -30,7 +30,7 @@
       "startDate": "2024-02-15",
       "priority": "LOW",
       "status": "TODO",
-      "labels": ["CSS", "Node.js"],
+      "labels": ["CSS", "Nodejs"],
       "description": "Make it look nice"
     },
     {
@@ -46,7 +46,7 @@
       "startDate": "2024-02-15",
       "priority": "LOW",
       "status": "TODO",
-      "labels": ["CSS", "Node.js"],
+      "labels": ["CSS", "Nodejs"],
       "description": "Make it look nice"
     },
     {
@@ -112,7 +112,7 @@
       },
       "startDate": "2024-01-10",
       "endDate": "2024-01-20",
-      "priority": "MEDIUM",
+      "priority": "HIGH",
       "labels": ["Html", "CSS"],
       "status": "COMPLETED",
       "description": "Build a cool app"
@@ -146,7 +146,7 @@
       },
       "startDate": "2024-01-10",
       "endDate": "2024-01-20",
-      "priority": "MEDIUM",
+      "priority": "HIGH",
       "labels": ["Html", "CSS"],
       "status": "COMPLETED",
       "description": "Build a cool app"
@@ -181,7 +181,7 @@
       "startDate": "2024-02-15",
       "priority": "LOW",
       "status": "TODO",
-      "labels": ["CSS", "Node.js"],
+      "labels": ["CSS", "Nodejs"],
       "description": "Make it look nice"
     },
     {
@@ -197,7 +197,7 @@
       "startDate": "2025-04-16",
       "priority": "LOW",
       "status": "TODO",
-      "labels": ["CSS", "Node.js"],
+      "labels": ["CSS", "Nodejs"],
       "description": "Make it look nice"
     }
   ],
@@ -216,5 +216,26 @@
       "phone": "987-654-3210",
       "profile": "https://i.pravatar.cc/30?img=2"
     }
-  ]
+  ],
+
+  "api/tasks": {
+    "GET": {
+      "action": "db.tasks"
+    },
+    "POST": {
+      "action": "db.tasks.push(req.body)",
+      "path": "/api/tasks"
+    }
+  },
+  "api/tasks/:id": {
+    "GET": {
+      "action": "db.tasks.find(data => data.id == :id)"
+    },
+    "PUT": {
+      "action": "db.tasks.find(data => data.id == :id) = {...req.body}"
+    },
+    "DELETE": {
+      "action": "db.tasks = db.tasks.filter(data => data.id != :id)"
+    }
+  }
 }

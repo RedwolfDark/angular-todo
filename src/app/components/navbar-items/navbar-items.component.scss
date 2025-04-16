@@ -8,7 +8,7 @@
   a {
     width: 100%;
     color: #333;
-    padding: 10px 0;
+    padding: 6px 3px;
     margin-bottom: 5px;
     text-decoration: none;
     display: block;
@@ -67,7 +67,14 @@
 }
 
 .labels {
-  margin-top: 25em;
+  position: fixed;
+  width: 230px;
+  left: 18px;
+  bottom: 1.5em;
+
+  .sidebar-dropdown {
+    display: block;
+  }
   a {
     font-weight: 500;
   }

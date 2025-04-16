@@ -1,0 +1,22 @@
+{
+  "/api/tasks": {
+    "GET": {
+      "action": "db.tasks"
+    },
+    "POST": {
+      "action": "db.tasks.push(req.body)",
+      "path": "/api/tasks"
+    }
+  },
+  "/api/tasks/:id": {
+    "GET": {
+      "action": "db.tasks.find(data => data.id == :id)"
+    },
+    "PUT": {
+      "action": "db.tasks.find(data => data.id == :id) = {...req.body}"
+    },
+    "DELETE": {
+      "action": "db.tasks = db.tasks.filter(data => data.id != :id)"
+    }
+  }
+}

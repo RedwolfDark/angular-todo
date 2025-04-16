@@ -1,29 +1,44 @@
-import { Component, DestroyRef, Input, signal } from '@angular/core';
+import { Component, computed, DestroyRef, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { Label, Person, Task, TaskService } from '@core';
+import { MatIconModule } from '@angular/material/icon';
+import { Label, param, Person, Task, TaskService } from '@core';
 import { CreateTaskComponent } from '@feature';
-import { Angular2SmartTableModule, Settings } from 'angular2-smart-table';
+import { Angular2SmartTableModule, Cell, Settings } from 'angular2-smart-table';
 import { TableLabelItemComponent } from '../table-label-item/table-label-item.component';
 
 @Component({
   selector: 'app-table',
-  imports: [Angular2SmartTableModule, MatDatepickerModule, MatFormFieldModule],
+  imports: [
+    Angular2SmartTableModule,
+    MatIconModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+  ],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
 export class TableComponent {
   settings: Settings = {
+    mode: 'external',
     actions: {
       add: false,
       edit: true,
       delete: true,
-      position: 'left',
+      position: 'right',
     },
-    edit: { editButtonContent: '' },
-    delete: { deleteButtonContent: '' },
+    edit: {
+      editButtonContent: `<span class="edit-actions material-icons">edit</span>`,
+      sanitizer: { bypassHtml: true },
+    },
+    delete: {
+      deleteButtonContent: `<span class="delete-actions material-icons">delete</span>`,
+      sanitizer: { bypassHtml: true },
+    },
     selectMode: 'multi',
     hideSubHeader: true,
     hideHeader: true,
@@ -46,7 +61,10 @@ export class TableComponent {
         title: '',
         type: 'custom',
         renderComponent: TableLabelItemComponent,
-        componentInitFunction: (component: TableLabelItemComponent, cell) => {
+        componentInitFunction: (
+          component: TableLabelItemComponent,
+          cell: Cell
+        ) => {
           component.labels = cell.getRawValue() as Label[];
         },
       },
@@ -67,18 +85,18 @@ export class TableComponent {
     },
   };
 
+  params = computed(() => param());
+
+  tasks = signal<Array<Task>>([]);
+
   constructor(
     private taskService: TaskService,
     public dialog: MatDialog,
     private destroyRef: DestroyRef
   ) {}
 
-  @Input() params?: Partial<Task> = {};
-
-  tasks = signal<Array<Task>>([]);
-
   ngOnInit(): void {
-    this.loadTasks(this.params);
+    this.loadTasks(this.params());
   }
 
   loadTasks(param?: Partial<Task>): void {
@@ -87,15 +105,29 @@ export class TableComponent {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((task) => {
         let tasks = task;
+
         if (param) {
           tasks = task.filter((t) =>
-            Object.entries(param).some(
-              ([key, value]) => (t as any)[key] == value
-            )
+            Object.entries(param).some(([key, value]) => {
+              if (key.toUpperCase().includes('DATE')) {
+                return (
+                  new Date((t as any)[key]).getFullYear() ==
+                    new Date(value as string).getFullYear() &&
+                  new Date((t as any)[key]).getMonth() ==
+                    new Date(value as string).getMonth() &&
+                  new Date((t as any)[key]).getDate() ==
+                    new Date(value as string).getDate()
+                );
+              }
+
+              if (key == 'labels') {
+                return (t as any)[key].includes(value);
+              }
+
+              return (t as any)[key] == value;
+            })
           );
         }
-        console.log(tasks);
-
         this.tasks.set(tasks);
       });
   }
@@ -109,6 +141,8 @@ export class TableComponent {
   }
 
   onDelete(event: any): void {
+    console.log(event);
+
     if (window.confirm('Are you sure you want to delete this Task?')) {
       this.taskService
         .deleteTask(event.data.id)

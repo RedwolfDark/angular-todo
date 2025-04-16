@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { Label, param, Priority, Status } from '@core';
 
 export interface NavbarItem {
   title: string;
@@ -37,9 +38,54 @@ export class NavbarItemComponent {
 
   activeItem(item: NavbarItem) {
     this.isItemActive.set(!item.is_active);
+    this.editState(item.id);
   }
 
   activeSubItem(subItem: NavbarItem) {
     this.isSubItemActive.set(!subItem.is_active);
+    this.editState(subItem.id);
+  }
+
+  editState(id: string) {
+    switch (id) {
+      case 'complete':
+        param.set({ status: Status.COMPLETED });
+        break;
+      case 'all':
+        param.set(undefined);
+        break;
+      case 'today':
+        const date = new Date();
+        param.set({
+          startDate: `${date.getFullYear()}-${
+            date.getMonth() + 1
+          }-${date.getDate()}`,
+        });
+        break;
+      case Priority.HIGH:
+        param.set({ priority: id });
+        break;
+      case Priority.LOW:
+        param.set({ priority: id });
+        break;
+      case Priority.MEDIUM:
+        param.set({ priority: id });
+        break;
+      case Label.CSS:
+        param.set({ labels: [id] });
+        break;
+      case Label.HTML:
+        param.set({ labels: [id] });
+        break;
+      case Label.JQUERY:
+        param.set({ labels: [id] });
+        break;
+      case Label.NODE_JS:
+        param.set({ labels: [id] });
+        break;
+
+      default:
+        break;
+    }
   }
 }

@@ -21,13 +21,15 @@
     "paths": {
       "@core": ["src/app/core/index.ts"],
       "@component": ["src/app/components/index.ts"],
-      "@feature": ["src/app/features/index.ts"]
+      "@feature": ["src/app/features/index.ts"],
+      "@env": ["src/environments/index.ts"]
     }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
+    "strictOutputEventTypes": true,
     "strictTemplates": true
   }
 }

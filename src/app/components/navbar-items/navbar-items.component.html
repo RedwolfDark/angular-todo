@@ -1,8 +1,6 @@
 <ng-container *ngIf="item">
   <li class="navbar-item" [class]="item.special_class">
     <a
-      [routerLink]="[item.href]"
-      routerLinkActive="router-link-active"
       [id]="item.id"
       *ngIf="item.sub_items; else noDropdown"
       (click)="displayDropdown()"
@@ -18,8 +16,6 @@
 
     <ng-template #noDropdown>
       <a
-        [routerLink]="[item.href]"
-        routerLinkActive="router-link-active"
         [id]="item.id"
         [class]="{ active: isItemActive() }"
         (click)="activeItem(item)"
@@ -33,8 +29,6 @@
       <ul class="sidebar-dropdown" [class]="{ show: showDropdown() }">
         <ng-container *ngFor="let subitem of item.sub_items">
           <a
-            [routerLink]="[subitem.href]"
-            routerLinkActive="router-link-active"
             [id]="subitem.id"
             [class]="{ active: isSubItemActive() }"
             (click)="activeSubItem(subitem)"
