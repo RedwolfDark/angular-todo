@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { TaskService } from '@core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, of } from 'rxjs';
@@ -6,7 +6,8 @@ import * as TaskActions from '../actions/tasks.action';
 
 @Injectable()
 export class TaskEffects {
-  constructor(private actions$: Actions, private taskService: TaskService) {}
+  private actions$: Actions = inject(Actions);
+  private taskService: TaskService = inject(TaskService);
 
   loadTasks$ = createEffect(() =>
     this.actions$.pipe(

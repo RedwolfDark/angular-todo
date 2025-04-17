@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '@env';
 import { Observable } from 'rxjs';
 import { Task } from '../models/task.model';
@@ -10,7 +10,7 @@ import { Task } from '../models/task.model';
 export class TaskService {
   private apiUrl = `${environment.apiUrl}/tasks`;
 
-  constructor(private http: HttpClient) {}
+  private http: HttpClient = inject(HttpClient);
 
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.apiUrl);

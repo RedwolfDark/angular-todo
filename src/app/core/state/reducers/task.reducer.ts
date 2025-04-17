@@ -12,7 +12,7 @@ export const convertStringToLabelEnum = (value: string): Label | undefined => {
 export const convertStringToPriorityEnum = (
   value: string
 ): Priority | undefined => {
-  return (Object.values(Label) as Array<string>).includes(value)
+  return (Object.values(Priority) as Array<string>).includes(value)
     ? (value as Priority)
     : undefined;
 };
@@ -20,7 +20,7 @@ export const convertStringToPriorityEnum = (
 export const convertStringToStatusEnum = (
   value: string
 ): Status | undefined => {
-  return (Object.values(Label) as Array<string>).includes(value)
+  return (Object.values(Status) as Array<string>).includes(value)
     ? (value as Status)
     : undefined;
 };
@@ -51,21 +51,31 @@ export const taskReducer = createReducer(
     error,
   })),
   on(TaskActions.filterTasks, (state, { filters }) => {
-    console.log('Filter tasks');
-
     if (filters == undefined) {
       return {
         ...state,
-        tasks: state.tasks,
+        filteredTasks: state.tasks,
       };
     }
 
     const filtered = state.tasks.filter((task) => {
       const matchesStartDate =
-        !filters.startDate || task.startDate === filters.startDate;
+        !filters.startDate ||
+        (new Date(task.startDate).getFullYear() ===
+          new Date(filters.startDate).getFullYear() &&
+          new Date(task.startDate).getMonth() ===
+            new Date(filters.startDate).getMonth() &&
+          new Date(task.startDate).getDate() ===
+            new Date(filters.startDate).getDate());
 
       const matchesEndDate =
-        !filters.endDate || task.endDate === filters.endDate;
+        !filters.endDate ||
+        (new Date(task.endDate ?? task.startDate).getFullYear() ===
+          new Date(filters.endDate).getFullYear() &&
+          new Date(task.endDate ?? task.startDate).getMonth() ===
+            new Date(filters.endDate).getMonth() &&
+          new Date(task.endDate ?? task.startDate).getDate() ===
+            new Date(filters.endDate).getDate());
 
       const matchesPriority =
         !filters.priority ||
@@ -89,6 +99,7 @@ export const taskReducer = createReducer(
 
       return (
         (matchesStartDate || matchesEndDate) &&
+        matchesStatus &&
         matchesPriority &&
         matchesLabel &&
         matchesTitle

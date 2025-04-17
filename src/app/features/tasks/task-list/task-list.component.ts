@@ -7,8 +7,4 @@ import { TableComponent } from '@component';
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.scss',
 })
-export class TaskListComponent {
-  ngOnInit() {
-    console.log('task list');
-  }
-}
+export class TaskListComponent {}

@@ -6,7 +6,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { filterTasks, Label, Person, selectFilteredTasks, Task } from '@core';
+import * as TasksAction from '@core';
+import { Label, Person, selectFilteredTasks, Task } from '@core';
 import { CreateTaskComponent } from '@feature';
 import { Store } from '@ngrx/store';
 import { Angular2SmartTableModule, Cell, Settings } from 'angular2-smart-table';
@@ -88,11 +89,12 @@ export class TableComponent implements OnInit {
     },
   };
 
-  constructor(public dialog: MatDialog, private destroyRef: DestroyRef) {}
+  public dialog: MatDialog = inject(MatDialog);
+  private destroyRef: DestroyRef = inject(DestroyRef);
 
   private store: Store = inject(Store);
 
-  tasks$ = this.store.select(selectFilteredTasks);
+  filteredTasks$ = this.store.select(selectFilteredTasks);
 
   tasks = signal<Task[]>([]);
 
@@ -101,11 +103,14 @@ export class TableComponent implements OnInit {
   }
 
   loadTasks(): void {
-    this.store.dispatch(filterTasks({}));
+    this.store.dispatch(TasksAction.loadTasks());
+    this.store.dispatch(TasksAction.filterTasks({}));
 
-    this.tasks$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((task) => {
-      this.tasks.set(task);
-    });
+    this.filteredTasks$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((task) => {
+        this.tasks.set(task);
+      });
   }
 
   onAdd(): void {
