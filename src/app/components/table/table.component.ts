@@ -1,12 +1,14 @@
-import { Component, computed, DestroyRef, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { Label, param, Person, Task, TaskService } from '@core';
+import { filterTasks, Label, Person, selectFilteredTasks, Task } from '@core';
 import { CreateTaskComponent } from '@feature';
+import { Store } from '@ngrx/store';
 import { Angular2SmartTableModule, Cell, Settings } from 'angular2-smart-table';
 import { TableLabelItemComponent } from '../table-label-item/table-label-item.component';
 
@@ -14,6 +16,7 @@ import { TableLabelItemComponent } from '../table-label-item/table-label-item.co
   selector: 'app-table',
   imports: [
     Angular2SmartTableModule,
+    CommonModule,
     MatIconModule,
     MatDatepickerModule,
     MatFormFieldModule,
@@ -22,7 +25,7 @@ import { TableLabelItemComponent } from '../table-label-item/table-label-item.co
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
-export class TableComponent {
+export class TableComponent implements OnInit {
   settings: Settings = {
     mode: 'external',
     actions: {
@@ -85,51 +88,24 @@ export class TableComponent {
     },
   };
 
-  params = computed(() => param());
+  constructor(public dialog: MatDialog, private destroyRef: DestroyRef) {}
 
-  tasks = signal<Array<Task>>([]);
+  private store: Store = inject(Store);
 
-  constructor(
-    private taskService: TaskService,
-    public dialog: MatDialog,
-    private destroyRef: DestroyRef
-  ) {}
+  tasks$ = this.store.select(selectFilteredTasks);
 
-  ngOnInit(): void {
-    this.loadTasks(this.params());
+  tasks = signal<Task[]>([]);
+
+  ngOnInit() {
+    this.loadTasks();
   }
 
-  loadTasks(param?: Partial<Task>): void {
-    this.taskService
-      .getTasks()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((task) => {
-        let tasks = task;
+  loadTasks(): void {
+    this.store.dispatch(filterTasks({}));
 
-        if (param) {
-          tasks = task.filter((t) =>
-            Object.entries(param).some(([key, value]) => {
-              if (key.toUpperCase().includes('DATE')) {
-                return (
-                  new Date((t as any)[key]).getFullYear() ==
-                    new Date(value as string).getFullYear() &&
-                  new Date((t as any)[key]).getMonth() ==
-                    new Date(value as string).getMonth() &&
-                  new Date((t as any)[key]).getDate() ==
-                    new Date(value as string).getDate()
-                );
-              }
-
-              if (key == 'labels') {
-                return (t as any)[key].includes(value);
-              }
-
-              return (t as any)[key] == value;
-            })
-          );
-        }
-        this.tasks.set(tasks);
-      });
+    this.tasks$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((task) => {
+      this.tasks.set(task);
+    });
   }
 
   onAdd(): void {
@@ -144,19 +120,14 @@ export class TableComponent {
     console.log(event);
 
     if (window.confirm('Are you sure you want to delete this Task?')) {
-      this.taskService
-        .deleteTask(event.data.id)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(() => {
-          this.loadTasks();
-        });
+      // trigger delete event with ngx store
     }
   }
 
   openModal(task?: Task): void {
     const dialogRef = this.dialog.open(CreateTaskComponent, {
       width: '500px',
-      data: task ? { ...task } : {}, // Pass a copy
+      data: task ? { ...task } : {},
     });
 
     dialogRef

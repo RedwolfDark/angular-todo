@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, signal } from '@angular/core';
+import { Component, inject, Input, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { Label, param, Priority, Status } from '@core';
+import { filterTasks, Label, Priority, Status } from '@core';
+import { Store } from '@ngrx/store';
 
 export interface NavbarItem {
   title: string;
@@ -31,6 +32,7 @@ export class NavbarItemComponent {
   showDropdown = signal(false);
   isItemActive = signal(this.item.is_active);
   isSubItemActive = signal(false);
+  private store: Store = inject(Store);
 
   displayDropdown() {
     this.showDropdown.set(!this.showDropdown());
@@ -49,39 +51,45 @@ export class NavbarItemComponent {
   editState(id: string) {
     switch (id) {
       case 'complete':
-        param.set({ status: Status.COMPLETED });
+        this.store.dispatch(
+          filterTasks({ filters: { status: Status.COMPLETED } })
+        );
         break;
       case 'all':
-        param.set(undefined);
+        this.store.dispatch(filterTasks({}));
         break;
       case 'today':
         const date = new Date();
-        param.set({
-          startDate: `${date.getFullYear()}-${
-            date.getMonth() + 1
-          }-${date.getDate()}`,
-        });
+        this.store.dispatch(
+          filterTasks({
+            filters: {
+              startDate: `${date.getFullYear()}-${
+                date.getMonth() + 1
+              }-${date.getDate()}`,
+            },
+          })
+        );
         break;
       case Priority.HIGH:
-        param.set({ priority: id });
+        this.store.dispatch(filterTasks({ filters: { priority: id } }));
         break;
       case Priority.LOW:
-        param.set({ priority: id });
+        this.store.dispatch(filterTasks({ filters: { priority: id } }));
         break;
       case Priority.MEDIUM:
-        param.set({ priority: id });
+        this.store.dispatch(filterTasks({ filters: { priority: id } }));
         break;
       case Label.CSS:
-        param.set({ labels: [id] });
+        this.store.dispatch(filterTasks({ filters: { label: id } }));
         break;
       case Label.HTML:
-        param.set({ labels: [id] });
+        this.store.dispatch(filterTasks({ filters: { label: id } }));
         break;
       case Label.JQUERY:
-        param.set({ labels: [id] });
+        this.store.dispatch(filterTasks({ filters: { label: id } }));
         break;
       case Label.NODE_JS:
-        param.set({ labels: [id] });
+        this.store.dispatch(filterTasks({ filters: { label: id } }));
         break;
 
       default:
