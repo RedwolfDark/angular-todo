@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, withRouterConfig } from '@angular/router';
-import { TaskEffects, taskReducer } from '@core';
+import { PersonEffects, personReducer, TaskEffects, taskReducer } from '@core';
 import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
@@ -22,8 +22,8 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(BrowserAnimationsModule),
     provideRouter(routes, withRouterConfig({ onSameUrlNavigation: 'reload' })),
     provideHttpClient(withInterceptorsFromDi()),
-    provideStore({ tasks: taskReducer }),
-    provideEffects(TaskEffects),
+    provideStore({ tasks: taskReducer, persons: personReducer }),
+    provideEffects(TaskEffects, PersonEffects),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
   ],
 };

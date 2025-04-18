@@ -1,0 +1,44 @@
+<div class="container task-form-wrapper">
+  <form [formGroup]="personForm" (ngSubmit)="savePerson()" class="task-form">
+    <div class="header">
+      <h2>Add New Person</h2>
+      <button mat-icon-button type="button" (click)="closeModal()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="row form-group">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" />
+        <mat-error *ngIf="personForm.get('name')?.hasError('required')"
+          >Name is required</mat-error
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="row form-group">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" />
+          <mat-error *ngIf="personForm.get('email')?.hasError('required')"
+            >Email is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Phone</mat-label>
+          <input matInput formControlName="phone" />
+          <mat-error *ngIf="personForm.get('phone')?.hasError('required')"
+            >Phone is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button mat-flat-button type="submit">Save</button>
+    </div>
+  </form>
+</div>

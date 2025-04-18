@@ -25,7 +25,7 @@ export const convertStringToStatusEnum = (
     : undefined;
 };
 
-export const initialState: TaskState = {
+const initialState: TaskState = {
   tasks: [],
   filteredTasks: [],
   loading: false,

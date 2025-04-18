@@ -1,19 +1,24 @@
 <div class="container">
   <div class="row">
     <div class="table col-md-12">
-      <input #search class="search" type="text" placeholder="Search..." />
-      <mat-form-field class="date-picker">
-        <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [rangePicker]="picker">
-          <input matStartDate placeholder="Start date" />
-          <input matEndDate placeholder="End date" />
-        </mat-date-range-input>
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="picker"
-        ></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-      </mat-form-field>
+      <div class="head">
+        <input #search class="search" type="text" placeholder="Search..." />
+        <mat-form-field class="date-picker">
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date" />
+            <input matEndDate placeholder="End date" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <button (click)="openPersonModal()" class="add-person" type="button">
+          + Add person
+        </button>
+      </div>
       <angular2-smart-table
         [settings]="settings"
         [source]="tasks()"

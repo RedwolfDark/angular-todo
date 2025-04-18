@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+  ViewEncapsulation,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -8,7 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import * as TasksAction from '@core';
 import { Label, Person, selectFilteredTasks, Task } from '@core';
-import { CreateTaskComponent } from '@feature';
+import { CreatePersonComponent, CreateTaskComponent } from '@feature';
 import { Store } from '@ngrx/store';
 import { Angular2SmartTableModule, Cell, Settings } from 'angular2-smart-table';
 import { TableLabelItemComponent } from '../table-label-item/table-label-item.component';
@@ -23,6 +30,7 @@ import { TableLabelItemComponent } from '../table-label-item/table-label-item.co
     MatFormFieldModule,
   ],
   providers: [provideNativeDateAdapter()],
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
@@ -113,12 +121,8 @@ export class TableComponent implements OnInit {
       });
   }
 
-  onAdd(): void {
-    this.openModal();
-  }
-
   onEdit(event: any): void {
-    this.openModal(event.data);
+    this.openTaskModal(event.data);
   }
 
   onDelete(event: any): void {
@@ -129,9 +133,8 @@ export class TableComponent implements OnInit {
     }
   }
 
-  openModal(task?: Task): void {
+  openTaskModal(task?: Task): void {
     const dialogRef = this.dialog.open(CreateTaskComponent, {
-      width: '500px',
       data: task ? { ...task } : {},
     });
 
@@ -141,6 +144,23 @@ export class TableComponent implements OnInit {
       .subscribe((result) => {
         if (result) {
           this.loadTasks();
+        }
+      });
+  }
+
+  openPersonModal(task?: Task): void {
+    const dialogRef = this.dialog.open(CreatePersonComponent, {
+      width: '60%',
+      panelClass: 'custom-modal-box',
+      data: task ? { ...task } : {},
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
+        if (result) {
+          console.log(result);
         }
       });
   }

@@ -17,7 +17,7 @@ export class TaskService {
   }
 
   getTask(id: number): Observable<Task> {
-    return this.http.get<Task>(`${this.apiUrl}/${id}`);
+    return this.http.get<Task>(`${this.apiUrl}?id=${id}`);
   }
 
   createTask(Task: Task): Observable<Task> {
@@ -25,10 +25,10 @@ export class TaskService {
   }
 
   updateTask(id: number, Task: Task): Observable<Task> {
-    return this.http.put<Task>(`${this.apiUrl}/${id}`, Task);
+    return this.http.put<Task>(`${this.apiUrl}?id=${id}`, Task);
   }
 
   deleteTask(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}?id=${id}`);
   }
 }

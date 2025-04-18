@@ -13,12 +13,12 @@ export const selectFilteredTasks = createSelector(
   (state) => state.filteredTasks
 );
 
-export const selectLoading = createSelector(
+export const selectTaskLoading = createSelector(
   selectTaskState,
   (state) => state.loading
 );
 
-export const selectError = createSelector(
+export const selectTaskError = createSelector(
   selectTaskState,
   (state) => state.error
 );
